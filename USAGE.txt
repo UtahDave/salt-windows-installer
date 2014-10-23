@@ -1,0 +1,11 @@
+# Examples
+# These states will build Salt installers based off:
+#  - git tags
+#  - git branch
+#  - git sha hash
+
+# Build Windows installers for the 'v2014.7.0rc3' tag
+time salt 'Win*' state.sls windowsinstaller.build pillar='{"git_rev": "v2014.7.0rc3"}'
+
+time salt 'Win*' state.sls windowsinstaller.build pillar='{"git_rev": "v2014.1.12", "git_upstream": "https://github.com/basepi/salt.git"}'
+
