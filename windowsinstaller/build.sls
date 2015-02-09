@@ -45,17 +45,12 @@ extract_zip:
     - require:
       - cmd: make_bdist_esky
 
-
+# replace the version line from the actual file in the git repo.
 nsi_file:
-  file.managed:
-    - source: salt://windowsinstaller/Salt-Minion-Setup.nsi
-    - name:  '{{ git_clone }}\pkg\windows\installer\Salt-Minion-Setup.nsi'
-    - template: jinja
-    - context:
-      salt_version: {{ git_rev }}
-    - require:
-      - module: extract_zip
-
+  file.replace:
+    - name: '{{ git_clone }}\pkg\windows\installer\Salt-Minion-Setup.nsi'
+    - pattern: '^!define PRODUCT_VERSION.*'
+    - repl: '!define PRODUCT_VERSION "{{ git_rev }}"'
 
 compile_nsi:
   cmd.run:
